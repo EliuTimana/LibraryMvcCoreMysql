@@ -1,0 +1,35 @@
+@model IEnumerable<LibraryMvcCoreMysql.Models.Catalog.AssetIndexListingModel>
+
+@{
+    ViewBag.Title = "Library Catalog Index";
+}
+
+<h1>@ViewBag.Title</h1>
+<a asp-controller="Catalog" asp-action="Index" asp-route-id="1">ssss</a>
+
+<div class="row">
+    
+    @foreach (var asset in Model)
+    {
+        <div class="col s12 m4 l3">
+            <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img src="https://picsum.photos/200/300?image=@asset.Id" class="activator">
+                    <span class="card-title">@asset.Title</span>
+                </div>
+                <div class="card-action">
+                    <a href="#" class="blue-text">This is a link</a>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">
+                        <i class="material-icons right">close</i> @asset.Title
+                    </span>
+                    <ul>
+                        <li>@asset.AuthorOrDirector</li>
+                        <li>@asset.DeweyCallNumber</li>
+                    </ul>
+                </div>
+            </div>
+        </div>   
+    }
+</div>
