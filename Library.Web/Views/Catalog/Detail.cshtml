@@ -1,0 +1,119 @@
+﻿@model LibraryWeb.Models.Catalog.AssetDetailModel
+
+<div class="row">
+    <div class="col m12">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="col m3">
+                        <img src="https://picsum.photos/200/300?image=@Model.Id" alt=""/>
+                    </div>
+                    <div class="col m4">
+                        <ul class="collection with-header">
+                            <li class="collection-header">
+                                <h5>@Model.Title</h5>
+                            </li>
+                            <li class="collection-item">@Model.AuthorOrDirector</li>
+                            <li class="collection-item">@Model.Type</li>
+                            <li class="collection-item">@Model.Status</li>
+                            <li class="collection-item">@Model.CurrentLocation</li>
+                        </ul>
+                        @if (Model.Status == "Lost")
+                        {
+                            <p>This item has been lost. It can not be checked out</p>
+                            <div>
+                                <a class="waves-effect waves-light btn red" role="button" asp-controller="Catalog" asp-action="MarkFound" asp-route-id="@Model.Id">Mark Found</a>
+                            </div>
+                        }
+
+                        @if (Model.Status == "Checked Out")
+                        {
+                            <p>Checked Out By: @Model.PatronName</p>
+                            <div>
+                                <a class="waves-effect waves-light btn blue" role="button" asp-controller="Catalog" asp-action="Checkin" asp-route-id="@Model.Id">Check In</a>
+                            </div>
+                            <div>
+                                <a class="waves-effect waves-light btn red" role="button" asp-controller="Catalog" asp-action="Hold" asp-route-id="@Model.Id">Hold</a>
+                            </div>
+                        }
+
+                        @if (Model.Status == "Available")
+                        {
+                            <div>
+                                <a class="waves-effect waves-light btn green" role="button" asp-controller="Catalog" asp-action="Checkout" asp-route-id="@Model.Id">Check Out</a>
+                            </div>
+                        }
+                    </div>
+                    <div class="col m4">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>ISBN:</th>
+                                <td>@Model.Isbn</td>
+                            </tr>
+                            <tr>
+                                <th>Call number:</th>
+                                <td>@Model.DeweyCallNumber</td>
+                            </tr>
+                            <tr>
+                                <th>Replacement cost:</th>
+                                <td>@Decimal.Round(Model.Cost, 2)</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col m6">
+        <div class="card">
+            <div class="card-content">
+                <h4>Current Holds</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hold Placed</th>
+                            <th>Patron</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var hold in Model.CurrentHolds)
+                        {
+                            <tr>
+                                <td>@hold.HoldPlaced</td>
+                                <td>@hold.PatronName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col m6">
+        <div class="card">
+            <div class="card-content">
+                <h4>Checkout History</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date loaned</th>
+                            <th>Date returned</th>
+                            <th>Card id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var checkout in Model.CheckoutHistory)
+                        {
+                            <tr>
+                                <td>@checkout.CheckedOut</td>
+                                <td>@checkout.CheckedIn</td>
+                                <td>@checkout.LibraryCard.Id</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

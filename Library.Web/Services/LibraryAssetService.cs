@@ -95,5 +95,10 @@ namespace LibraryWeb.Services
                 ? LibraryAssetType.Book
                 : LibraryAssetType.Video;
         }
+
+        public string GetTypeLabel(int id)
+        {
+            return GetType(id) == LibraryAssetType.Book ? "Book" : "Video";
+        }
     }
 }

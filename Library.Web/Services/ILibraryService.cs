@@ -11,6 +11,7 @@ namespace LibraryWeb.Services
         string GetAuthorOrDirector(int id);
         string GetDeweyIndex(int id);
         LibraryAssetType GetType(int id);
+        string GetTypeLabel(int id);
         string GetTitle(int id);
         string GetIsbn(int id);
         LibraryBranch GetCurrentLocation(int id);

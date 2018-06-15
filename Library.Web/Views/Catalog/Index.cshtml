@@ -4,8 +4,7 @@
     ViewBag.Title = "Library Catalog Index";
 }
 
-<h1>@ViewBag.Title</h1>
-<a asp-controller="Catalog" asp-action="Index" asp-route-id="1">ssss</a>
+<h2 class="header">@ViewBag.Title</h2>
 
 <div class="row">
     
@@ -18,7 +17,7 @@
                     <span class="card-title">@asset.Title</span>
                 </div>
                 <div class="card-action">
-                    <a href="#" class="blue-text">This is a link</a>
+                    <a asp-controller="Catalog" asp-action="Detail" asp-route-id="@asset.Id" class="blue-text">Detail</a>
                 </div>
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">
