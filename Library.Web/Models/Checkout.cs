@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace LibraryMvcCoreMysql.Models
+namespace LibraryWeb.Models
 {
     public class Checkout
     {

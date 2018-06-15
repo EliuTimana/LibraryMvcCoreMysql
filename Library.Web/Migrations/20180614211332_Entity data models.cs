@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LibraryMvcCoreMysql.Migrations
+namespace LibraryWeb.Migrations
 {
     public partial class Entitydatamodels : Migration
     {

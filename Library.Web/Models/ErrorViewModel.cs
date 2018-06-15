@@ -1,6 +1,6 @@
 using System;
 
-namespace LibraryMvcCoreMysql.Models
+namespace LibraryWeb.Models
 {
     public class ErrorViewModel
     {

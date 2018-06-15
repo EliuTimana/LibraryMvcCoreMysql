@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
-using LibraryMvcCoreMysql.Models;
+using LibraryWeb.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryMvcCoreMysql.Services
+namespace LibraryWeb.Services
 {
     public class LibraryAssetService : ILibraryService
     {
-        private LibraryContext _context;
+        private readonly LibraryContext _context;
 
         public LibraryAssetService(LibraryContext context)
         {
             _context = context;
         }
+
         public void Add(LibraryAsset asset)
         {
             _context.Add(asset);
@@ -22,19 +23,20 @@ namespace LibraryMvcCoreMysql.Services
         public IEnumerable<LibraryAsset> GetAll()
         {
             return _context.LibraryAssets
-            .Include(asset => asset.Status)
-            .Include(asset => asset.Location);
+                .Include(asset => asset.Status)
+                .Include(asset => asset.Location);
         }
 
         public string GetAuthorOrDirector(int id)
         {
             if (GetType(id) == LibraryAssetType.Book)
             {
-                return _context.Books.FirstOrDefault(b => b.Id == id).Author;
+                return _context.Books.FirstOrDefault(b => b.Id == id)?.Author;
             }
-            else if (GetType(id) == LibraryAssetType.Video)
+
+            if (GetType(id) == LibraryAssetType.Video)
             {
-                return _context.Videos.FirstOrDefault(v => v.Id == id).Director;
+                return _context.Videos.FirstOrDefault(v => v.Id == id)?.Director;
             }
 
             return "Unkwon";
@@ -66,7 +68,7 @@ namespace LibraryMvcCoreMysql.Services
             // var isBook = _context.LibraryAssets.OfType<Book>().Where(b => b.Id == id).Any();
             if (GetType(id) == LibraryAssetType.Book)
             {
-                return _context.Books.FirstOrDefault(b => b.Id == id).DeweyIndex;
+                return _context.Books.FirstOrDefault(b => b.Id == id)?.DeweyIndex;
             }
 
             return "";
@@ -76,7 +78,7 @@ namespace LibraryMvcCoreMysql.Services
         {
             if (GetType(id) == LibraryAssetType.Book)
             {
-                return _context.Books.FirstOrDefault(b => b.Id == id).ISBN;
+                return _context.Books.FirstOrDefault(b => b.Id == id)?.ISBN;
             }
 
             return "";
@@ -84,12 +86,14 @@ namespace LibraryMvcCoreMysql.Services
 
         public string GetTitle(int id)
         {
-            return _context.LibraryAssets.FirstOrDefault(a => a.Id == id).Title;
+            return _context.LibraryAssets.FirstOrDefault(a => a.Id == id)?.Title;
         }
 
         public LibraryAssetType GetType(int id)
         {
-            return _context.LibraryAssets.OfType<Book>().Where(b => b.Id == id).Any() ? LibraryAssetType.Book : LibraryAssetType.Video;
+            return _context.LibraryAssets.OfType<Book>().Any(b => b.Id == id)
+                ? LibraryAssetType.Book
+                : LibraryAssetType.Video;
         }
     }
 }

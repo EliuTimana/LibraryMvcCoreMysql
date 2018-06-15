@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LibraryMvcCoreMysql.Models
+namespace LibraryWeb.Models
 {
     public class LibraryCard
     {

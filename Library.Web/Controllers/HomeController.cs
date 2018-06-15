@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using LibraryWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using LibraryMvcCoreMysql.Models;
 
-namespace LibraryMvcCoreMysql.Controllers
+namespace LibraryWeb.Controllers
 {
     public class HomeController : Controller
     {

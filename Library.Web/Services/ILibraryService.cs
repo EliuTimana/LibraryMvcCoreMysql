@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using LibraryMvcCoreMysql.Models;
+using LibraryWeb.Models;
 
-namespace LibraryMvcCoreMysql.Services
+namespace LibraryWeb.Services
 {
     public interface ILibraryService
     {

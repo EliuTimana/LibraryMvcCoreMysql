@@ -1,4 +1,4 @@
-namespace LibraryMvcCoreMysql.Models.Catalog
+namespace LibraryWeb.Models.Catalog
 {
     public class AssetIndexListingModel
     {

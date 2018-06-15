@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LibraryMvcCoreMysql.Models
+namespace LibraryWeb.Models
 {
     public enum LibraryAssetType
     {

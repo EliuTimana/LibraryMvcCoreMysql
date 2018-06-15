@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryMvcCoreMysql.Models
+namespace LibraryWeb.Models
 {
     public class LibraryContext : DbContext
     {

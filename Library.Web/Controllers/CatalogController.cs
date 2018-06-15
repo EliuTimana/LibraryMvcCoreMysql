@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
-using LibraryMvcCoreMysql.Services;
 using System.Linq;
-using LibraryMvcCoreMysql.Models.Catalog;
+using LibraryWeb.Models.Catalog;
+using LibraryWeb.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace LibraryMvcCoreMysql.Controllers
+namespace LibraryWeb.Controllers
 {
     public class CatalogController : Controller
     {
-        private ILibraryService _libraryService;
+        private readonly ILibraryService _libraryService;
         public CatalogController(ILibraryService libraryService)
         {
             _libraryService = libraryService;
