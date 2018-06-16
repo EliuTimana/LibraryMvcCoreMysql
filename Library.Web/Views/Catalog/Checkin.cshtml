@@ -1,0 +1,10 @@
+@model LibraryWeb.Models.Checkouts.CheckoutModel
+
+<form asp-action="PlaceCheckin" asp-controller="Catalog" method="POST">
+
+    <input asp-for="AssetId" type="hidden"/>
+    
+    <div>
+        <button type="submit" class="btn blue">Check in</button>
+    </div>
+</form>

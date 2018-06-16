@@ -71,7 +71,7 @@ namespace LibraryWeb.Services
             return now.AddDays(30);
         }
 
-        private bool IsCheckedOut(int assetId)
+        public bool IsCheckedOut(int assetId)
         {
             var isCheckedOut = _context.Checkout
             .Where(c => c.LibraryAsset.Id == assetId)
@@ -80,7 +80,7 @@ namespace LibraryWeb.Services
             return isCheckedOut;
         }
 
-        public void CheckInItem(int assetId, int libraryCardId)
+        public void CheckInItem(int assetId)
         {
             var item = _context.LibraryAssets.FirstOrDefault(a => a.Id == assetId);
 
@@ -97,9 +97,10 @@ namespace LibraryWeb.Services
             if (currentHolds.Any())
             {
                 CheckoutToEarliestHold(assetId, currentHolds);
+                return;
             }
 
-            UpdateAssetStatus(assetId, "Avaliable");
+            UpdateAssetStatus(assetId, "Available");
 
             _context.SaveChanges();
         }
@@ -109,6 +110,8 @@ namespace LibraryWeb.Services
             var earliestHold = currentHolds
                 .OrderBy(h => h.HoldedPlaced)
                 .FirstOrDefault();
+
+            if (earliestHold == null) return;
 
             var card = earliestHold.LibraryCard;
 
@@ -128,7 +131,9 @@ namespace LibraryWeb.Services
 
         public void PlaceHold(int assetId, int libraryCardId)
         {
-            var asset = _context.LibraryAssets.FirstOrDefault(a => a.Id == assetId);
+            var asset = _context.LibraryAssets
+            .Include(a => a.Status)
+            .FirstOrDefault(a => a.Id == assetId);
 
             var card = _context.LibraryCards.FirstOrDefault(c => c.Id == libraryCardId);
 
@@ -234,6 +239,8 @@ namespace LibraryWeb.Services
         {
             //close any existing checkout history
             var history = _context.CheckoutHistory
+                .Include(c=>c.LibraryAsset)
+                .Include(c=>c.LibraryCard)
                 .FirstOrDefault(h => h.LibraryAsset.Id == assetId && h.CheckedIn == null);
 
             if (history == null) return;

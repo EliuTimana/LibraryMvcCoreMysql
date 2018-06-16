@@ -1,0 +1,16 @@
+@model LibraryWeb.Models.Checkouts.CheckoutModel
+
+<form asp-action="PlaceCheckout" asp-controller="Catalog" method="POST">
+
+    <input asp-for="AssetId" type="hidden"/>
+    <div class="row">
+        <div class="input-field col m6">
+            <label asp-for="LibraryCardId">Please insert a library Card ID</label>
+            <input asp-for="LibraryCardId"/>
+        </div>
+    </div>
+    
+    <div>
+        <button type="submit" class="btn blue">Check out</button>
+    </div>
+</form>

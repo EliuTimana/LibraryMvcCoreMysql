@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using LibraryWeb.Models.Checkouts;
 using LibraryWeb.Models.Catalog;
 using LibraryWeb.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -50,6 +51,7 @@ namespace LibraryWeb.Controllers
                 CurrentLocation = _libraryService.GetCurrentLocation(id).Name,
                 DeweyCallNumber = _libraryService.GetDeweyIndex(id),
                 Isbn = _libraryService.GetIsbn(id),
+                PatronName = _checkoutService.GetCurrentCheckoutPatron(id),
                 CheckoutHistory = _checkoutService.GetCheckoutHistory(id),
                 CurrentHolds = _checkoutService.GetCurrentHolds(id).Select(a => new AssetHoldModel
                 {
@@ -59,6 +61,94 @@ namespace LibraryWeb.Controllers
             };
 
             return View(model);
+        }
+
+        public IActionResult Checkout(int id)
+        {
+            var asset = _libraryService.GetById(id);
+
+            var model = new CheckoutModel
+            {
+                AssetId = asset.Id,
+                ImageUrl = asset.ImageUrl,
+                Title = asset.Title,
+                LibraryCardId = "",
+                IsCheckedOut = _checkoutService.IsCheckedOut(id)
+            };
+
+            return View(model);
+        }
+        public IActionResult Checkin(int id)
+        {
+            var asset = _libraryService.GetById(id);
+
+            var model = new CheckoutModel
+            {
+                AssetId = asset.Id,
+                ImageUrl = asset.ImageUrl,
+                Title = asset.Title,
+                LibraryCardId = "",
+                IsCheckedOut = _checkoutService.IsCheckedOut(id)
+            };
+
+            return View(model);
+        }
+
+        public IActionResult Hold(int id)
+        {
+            var asset = _libraryService.GetById(id);
+
+            var model = new CheckoutModel
+            {
+                AssetId = asset.Id,
+                ImageUrl = asset.ImageUrl,
+                Title = asset.Title,
+                LibraryCardId = "",
+                IsCheckedOut = _checkoutService.IsCheckedOut(id),
+                HoldCount = _checkoutService.GetCurrentHolds(id).Count()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult PlaceCheckout(int assetId, int libraryCardId)
+        {
+            _checkoutService.CheckOutItem(assetId, libraryCardId);
+
+            return RedirectToAction("Detail", new { id = assetId });
+        }
+
+        [HttpPost]
+        public IActionResult PlaceCheckin(int assetId)
+        {
+            _checkoutService.CheckInItem(assetId);
+
+            return RedirectToAction("Detail", new { id = assetId });
+        }
+
+        [HttpPost]
+        public IActionResult PlaceHold(int assetId, int libraryCardId)
+        {
+            _checkoutService.PlaceHold(assetId, libraryCardId);
+
+            return RedirectToAction("Detail", new { id = assetId });
+        }
+
+        [HttpPost]
+        public IActionResult MarkLost(int assetId)
+        {
+            _checkoutService.MarkLost(assetId);
+
+            return RedirectToAction("Detail", new { id = assetId });
+        }
+
+        [HttpPost]
+        public IActionResult MarkFound(int assetId)
+        {
+            _checkoutService.MarkFound(assetId);
+
+            return RedirectToAction("Detail", new { id = assetId });
         }
     }
 }

@@ -1,0 +1,17 @@
+@model LibraryWeb.Models.Checkouts.CheckoutModel
+<h5>Place hold on library item</h5>
+<p>There are currently @Model.HoldCount items in queue for this item.</p>
+<form asp-action="PlaceHold" asp-controller="Catalog" method="POST">
+
+    <input asp-for="AssetId" type="hidden"/>
+    <div class="row">
+        <div class="input-field col m6">
+            <label asp-for="LibraryCardId">Please insert a library Card ID</label>
+            <input asp-for="LibraryCardId"/>
+        </div>
+    </div>
+    
+    <div>
+        <button type="submit" class="btn blue">Hold</button>
+    </div>
+</form>
