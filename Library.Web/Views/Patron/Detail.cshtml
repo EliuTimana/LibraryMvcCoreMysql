@@ -1,0 +1,66 @@
+@model LibraryWeb.Models.PatronModel.PatronDetailModel
+
+<h2>Patron information</h2>
+
+<div class="row">
+    <div class="col m4">
+        <h3>@Model.FullName</h3>
+        <dl>
+            <dt>LibraryCardId:</dt>
+            <dd>@Model.LibraryCardId</dd>
+            <dt>Address:</dt>
+            <dd>@Model.Address</dd>
+            <dt>Telephone:</dt>
+            <dd>@Model.Telephone</dd>
+            <dt>Member since:</dt>
+            <dd>@Model.MemberSince</dd>
+            <dt>Home Library Branch:</dt>
+            <dd>@Model.HomeLibraryBranch</dd>
+        </dl>
+        @if (Model.OverdueFees> 0)
+        {
+            <strong>Current fees due: $@Model.OverdueFees</strong>
+        }
+        else
+        {
+            <strong>No fees currently due.</strong>
+        }
+    </div>
+    <div class="col m4">
+        <h3>Assets currently checked out</h3>
+        @if (Model.AssetsCheckedOut.Any())
+        {
+            <ul>
+                @foreach (var checkout in Model.AssetsCheckedOut)
+                {
+                    <li>
+                        @checkout.LibraryAsset.Title - (LibraryAssetId: @checkout.LibraryAsset.Id)
+                        <ul>
+                            <li>Since: @checkout.Since</li>
+                            <li>Due: @checkout.Until</li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        }
+        else {
+            <p>No items currently checked out.</p>
+        }
+    </div>
+    <div class="col m4">
+        <h3>Assets currently on hold</h3>
+        @if (Model.Holds.Any())
+        {
+            <ul>
+                @foreach (var hold in Model.Holds)
+                {
+                    <li>@hold.LibraryAsset.Title - Placed @hold.HoldedPlaced.ToString("yy-dd-MM - HH:mm")</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No items on hold</p>
+        }
+    </div>
+</div>

@@ -40,10 +40,11 @@ namespace LibraryWeb
             services.AddDbContext<LibraryContext>(options => options.UseMySql(
                 connectionString: Configuration.GetConnectionString("DefaultConnection")
                 ));
-            
+
             services.AddSingleton(Configuration);
             services.AddScoped<ILibraryService, LibraryAssetService>();
             services.AddScoped<ICheckout, CheckoutService>();
+            services.AddScoped<IPatron, PatronService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
